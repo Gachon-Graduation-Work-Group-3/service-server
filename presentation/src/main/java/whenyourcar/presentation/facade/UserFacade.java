@@ -22,7 +22,7 @@ public class UserFacade {
 
     private final UserConverter userConverter;
 
-    public UserResponse.AuthResponseDto signup(UserRequest.SignUpDto signUpDto) {
+    /*public UserResponse.AuthResponseDto signup(UserRequest.SignUpDto signUpDto) {
         String email = authService.verifySocialToken(signUpDto.getToken());
         userService.signup(signUpDto, email);
         TokenInfo tokenInfo = authService.generateToken(email);
@@ -41,5 +41,5 @@ public class UserFacade {
         LocalDateTime expiration = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 
         return userConverter.toUserAuthResponse(email, tokenInfo, expiration);
-    }
+    }*/
 }

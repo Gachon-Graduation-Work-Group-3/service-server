@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
@@ -55,11 +56,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenInfo generateToken(String email) {
+    public TokenInfo generateToken(OAuth2User oAuth2User) {
         long tokenPeriod = 1000L * 60L * 30L; // 30분
         long refreshPeriod = 1000L * 60L * 60L * 2L; // 2시간
 
-        Claims claims = Jwts.claims().setSubject(email);
+        Claims claims = Jwts.claims().setSubject(oAuth2User.getAttribute("email"));
         Date now = new Date();
 
         String accessToken = Jwts.builder()

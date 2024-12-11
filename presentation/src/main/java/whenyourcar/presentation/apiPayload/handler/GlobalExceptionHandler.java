@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import whenyourcar.domain.auth.exception.AuthenticationException;
+import whenyourcar.domain.common.code.exception.GeneralException;
 import whenyourcar.domain.common.code.status.ErrorStatus;
-import whenyourcar.domain.user.exception.GeneralException;
 import whenyourcar.presentation.apiPayload.ApiResponse;
 
 @ControllerAdvice

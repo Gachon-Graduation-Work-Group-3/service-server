@@ -17,17 +17,16 @@ public class SwaggerConfig {
                 .description("When Your Car 명세서")
                 .version("1.0.0");
 
-        String jwtSchemeName = "JWT TOKEN";
+        String sessionSchemeName = "Session";
 
-        SecurityRequirement securityRequirement = new SecurityRequirement().addList(jwtSchemeName);
+        // SecurityRequirement는 API 요청 시 필요한 인증 스키마를 정의
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList(sessionSchemeName);
 
         Components components = new Components()
-                .addSecuritySchemes(jwtSchemeName, new SecurityScheme()
-                        .name(jwtSchemeName)
-                        .type(SecurityScheme.Type.HTTP)
-                        .scheme("bearer")
-                        .bearerFormat("JWT"));
-
+                .addSecuritySchemes(sessionSchemeName, new SecurityScheme()
+                        .name("JSESSIONID")
+                        .type(SecurityScheme.Type.APIKEY)
+                        .in(SecurityScheme.In.COOKIE));
 
         return new OpenAPI()
                 .info(info)

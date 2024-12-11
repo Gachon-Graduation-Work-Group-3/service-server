@@ -14,6 +14,7 @@ public class UserConverter {
         return User.builder()
                 .email(email)
                 .name(signUpDto.getName())
+                .role(signUpDto.getRole())
                 .build();
     }
 

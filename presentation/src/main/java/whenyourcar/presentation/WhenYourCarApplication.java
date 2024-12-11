@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan(basePackages = {"whenyourcar.domain", "whenyourcar.presentation", "whenyourcar.storage.mysql" })
 @EnableJpaRepositories(basePackages = "whenyourcar.storage.mysql.repository")
-@EntityScan(basePackages = "whenyourcar.storage.mysql.data.entity")
+@EntityScan(basePackages = "whenyourcar.storage.mysql.data")
 @EnableJpaAuditing
 public class WhenYourCarApplication {
     public static void main(String[] args) {

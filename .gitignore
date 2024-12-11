@@ -34,6 +34,7 @@ out/
 /.nb-gradle/
 
 presentation/src/main/resources/application.yml
+presentation/src/main/resources/application-oauth.yml
 
 
 ### VS Code ###

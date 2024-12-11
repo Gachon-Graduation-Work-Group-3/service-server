@@ -13,6 +13,8 @@ public enum ErrorStatus implements BaseErrorCode {
     USER_ALREADY_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "USER2011", "user is already existed"),
     USER_ACCESS_TOKEN_NOT_VERITY(HttpStatus.UNAUTHORIZED, "USER2012", "wrong access token"),
 
+    CAR_IS_NOT_EXIST(HttpStatus.UNAUTHORIZED, "CAR2010", "car is not exist"),
+
     ;
 
     private final HttpStatus httpStatus;

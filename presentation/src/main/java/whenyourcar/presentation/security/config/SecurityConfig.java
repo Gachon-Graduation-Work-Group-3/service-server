@@ -9,12 +9,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import whenyourcar.domain.user.serviceImpl.CustomOAuth2UserService;
 import whenyourcar.presentation.facade.AuthFacade;
 import whenyourcar.presentation.security.filter.JwtAuthFilter;
+import whenyourcar.presentation.security.handler.OAuth2FailureHandler;
+import whenyourcar.presentation.security.handler.OAuth2SuccessHandler;
 
 import java.io.IOException;
 
@@ -22,43 +30,45 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final AuthFacade authFacade;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final OAuth2FailureHandler oAuth2FailureHandler;
     @Bean
     SecurityFilterChain oauth2SecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정을 SecurityConfig에 추가
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/","/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**").permitAll()
-                        .requestMatchers("/api/user/signup").permitAll()
+                        .requestMatchers("/","/index.html","/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "/login/oauth2/**").permitAll()        // OAuth2 인증 흐름 경로.permitAll()
                         .anyRequest().authenticated())
-                .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())) // Use custom entry point
-                .addFilterBefore(new JwtAuthFilter(authFacade), UsernamePasswordAuthenticationFilter.class)
-
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/logout"))
-        ;
+                        .logoutSuccessUrl("/"))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)) // 세션 관리 정책 설정
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .successHandler(oAuth2SuccessHandler)
+                        .failureHandler(oAuth2FailureHandler)
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)  // 사용자 정보를 처리할 커스텀 서비스 설정
+                        )
+                );
+                /*.exceptionHandling(exceptions -> exceptions
+                    .authenticationEntryPoint(new CustomAuthenticationEntryPoint())); */ // 인증되지 않은 사용자의 진입점 처리;
         return http.build();
     }
 
-    /*@Bean
-    public GrantedAuthoritiesMapper customAuthorityMapper() {
-        return new CustomAuthorityMapper();
-    }*/
+    @Bean
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
 
-    // Custom Authentication Entry Point
-    public static class CustomAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
-        @Override
-        public void commence(HttpServletRequest request, HttpServletResponse response,
-                             org.springframework.security.core.AuthenticationException authException) throws IOException {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
-        }
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:3000"); // React 앱에서 요청을 보낼 도메인만 허용
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
 
-        @Override
-        public void afterPropertiesSet() {
-            setRealmName("MY_REALM"); // Customize this if needed
-            super.afterPropertiesSet();
-        }
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
+
 }
