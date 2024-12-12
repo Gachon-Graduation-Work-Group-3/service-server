@@ -15,7 +15,6 @@ import whenyourcar.presentation.facade.UserFacade;
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 public class UserController {
-    private final UserFacade userFacade;
     private final HttpSession httpSession;
 
     /*@PostMapping("/signup")
@@ -32,11 +31,11 @@ public class UserController {
     }*/
 
     @GetMapping("/profile")
-    public SessionUser demo(){
+    public ApiResponse<SessionUser> getProfile(){
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
-
         if (user == null) {
             throw new RuntimeException("User not logged in");
         }
-        return user;    }
+        return ApiResponse.onSuccess(SuccessStatus.USER_PROFILE_SUCCESS, user);
+    }
 }

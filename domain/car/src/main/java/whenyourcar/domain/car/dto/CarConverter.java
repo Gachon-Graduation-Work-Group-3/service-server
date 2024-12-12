@@ -17,7 +17,8 @@ public class CarConverter {
                                 .age(car.getAge())
                                 .name(car.getName())
                                 .image(car.getImage())
-                                .mileage(car.getMileage()).build()
+                                .mileage(car.getMileage())
+                                .price(car.getPrice()).build()
                 ).collect(Collectors.toList());
     }
 

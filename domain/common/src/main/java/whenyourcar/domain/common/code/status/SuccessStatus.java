@@ -11,6 +11,7 @@ import whenyourcar.domain.common.code.ReasonDTO;
 public enum SuccessStatus implements BaseCode {
     USER_SIGNUP_SUCCESS(HttpStatus.OK, "USER2000", "signup success"),
     USER_LOGIN_SUCCESS(HttpStatus.OK, "USER2001", "login success"),
+    USER_PROFILE_SUCCESS(HttpStatus.OK, "USER2002", "user profile search success"),
 
     CAR_MAIN_PAGE_SUCCESS(HttpStatus.OK, "CAR2001", "car list search success"),
     CAR_DESC_SUCCESS(HttpStatus.OK, "CAR2002", "car desc search success"),

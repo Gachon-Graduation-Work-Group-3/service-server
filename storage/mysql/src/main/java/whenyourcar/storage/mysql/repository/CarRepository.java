@@ -9,7 +9,7 @@ import whenyourcar.storage.mysql.data.query.MainPageQuery;
 import java.util.List;
 
 public interface CarRepository extends JpaRepository <Car, Long> {
-    @Query("select new whenyourcar.storage.mysql.data.query.MainPageQuery(c.carId, c.name,c.age, c.image, c.mileage) " +
+    @Query("select new whenyourcar.storage.mysql.data.query.MainPageQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price) " +
             "from Car c " +
             "order by c.view desc ")
     List<MainPageQuery> findTopViewCarsForMainPage(Pageable pageable);

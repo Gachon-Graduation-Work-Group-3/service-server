@@ -11,4 +11,5 @@ public class MainPageQuery {
     private String age;
     private String image;
     private Integer mileage;
+    private Integer price;
 }

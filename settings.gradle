@@ -1,14 +1,13 @@
 rootProject.name = 'whenyourcar'
+
+
 include 'presentation'
-include 'domain'
 include 'storage:mysql'
 findProject(':storage:mysql')?.name = 'mysql'
 include 'domain:user'
 findProject(':domain:user')?.name = 'user'
 include 'domain:auth'
 findProject(':domain:auth')?.name = 'auth'
-include 'domain:common'
-findProject(':domain:common')?.name = 'common'
 include 'domain:common'
 findProject(':domain:common')?.name = 'common'
 include 'domain:car'

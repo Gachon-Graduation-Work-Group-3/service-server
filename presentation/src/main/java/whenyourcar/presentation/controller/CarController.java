@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api/car")
 public class CarController {
     private final CarFacade carFacade;
-    @GetMapping("/main")
+    @GetMapping("/search")
     public ApiResponse<List<CarResponse.MainPageResponse>> getCars(
             @RequestParam Integer page,
             @RequestParam Integer size
@@ -29,7 +29,7 @@ public class CarController {
         return ApiResponse.onSuccess(SuccessStatus.CAR_MAIN_PAGE_SUCCESS, carFacade.getCars(PageRequest.of(page, size)));
     }
 
-    @GetMapping("/desc")
+    @GetMapping("/description")
     public ApiResponse<CarResponse.DescResponse> getCarDesc(
             @RequestParam Long carId
     ) {

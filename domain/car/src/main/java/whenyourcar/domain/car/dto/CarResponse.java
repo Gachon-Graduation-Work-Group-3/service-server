@@ -17,6 +17,7 @@ public class CarResponse {
         private String age;
         private String image;
         private Integer mileage;
+        private Integer price;
     }
 
     @Builder
