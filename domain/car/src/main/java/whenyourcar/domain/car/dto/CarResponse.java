@@ -6,6 +6,7 @@ import lombok.Getter;
 import whenyourcar.storage.mysql.data.entity.Car;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class CarResponse {
     @Builder
@@ -14,7 +15,7 @@ public class CarResponse {
     public static class MainPageResponse{
         private Long carId;
         private String name;
-        private String age;
+        private Date age;
         private String image;
         private Integer mileage;
         private Integer price;

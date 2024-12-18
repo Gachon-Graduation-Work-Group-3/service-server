@@ -1,6 +1,7 @@
 package whenyourcar.domain.car.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import whenyourcar.domain.car.dto.CarConverter;
@@ -11,6 +12,7 @@ import whenyourcar.domain.common.code.status.ErrorStatus;
 import whenyourcar.storage.mysql.data.query.MainPageQuery;
 import whenyourcar.storage.mysql.repository.CarRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,8 +21,16 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final CarConverter carConverter;
     @Override
-    public List<CarResponse.MainPageResponse> getCars(Pageable pageable) {
-        List<MainPageQuery> mainPageQuery = carRepository.findTopViewCarsForMainPage(pageable);
+    public Page<CarResponse.MainPageResponse> getCars(Pageable pageable,
+                                                      Date minAge, Date maxAge,
+                                                      Integer minMileage, Integer maxMileage,
+                                                      Integer minPrice, Integer maxPrice,
+                                                      String color) {
+        Page<MainPageQuery> mainPageQuery = carRepository.findTopViewCarsForMainPage(pageable,
+                minAge,maxAge,
+                minMileage, maxMileage,
+                minPrice,maxPrice,
+                color);
         return carConverter.toMainPageResponse(mainPageQuery);
     }
 

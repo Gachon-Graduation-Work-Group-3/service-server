@@ -2,8 +2,10 @@ package whenyourcar.storage.mysql.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,6 +28,9 @@ public class Car {
     @Column(length = 20)
     private String name;
 
+    @Column(length = 5)
+    private String color;
+
     @Column()
     private Integer view;
 
@@ -35,11 +40,13 @@ public class Car {
     @Column(length = 10)
     private String number;
 
+    @DateTimeFormat(pattern = "yyyy.MM")
     @Column(length = 20)
-    private String first_reg;
+    private Date first_reg;
 
+    @DateTimeFormat(pattern = "yyyy.MM")
     @Column(length = 20)
-    private String age;
+    private Date age;
 
     @Column()
     private Integer mileage;

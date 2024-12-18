@@ -39,7 +39,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정을 SecurityConfig에 추가
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/","/index.html","/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "/login/oauth2/**").permitAll()        // OAuth2 인증 흐름 경로.permitAll()
+                        .requestMatchers("/","/index.html","/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "/login/oauth2/**").permitAll()
+                        .requestMatchers("/api/car/**").permitAll()
                         .anyRequest().authenticated())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/"))
