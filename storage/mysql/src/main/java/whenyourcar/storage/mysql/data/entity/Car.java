@@ -40,6 +40,9 @@ public class Car {
     @Column(length = 10)
     private String number;
 
+    @Column(length = 10)
+    private String fuelEff;
+
     @DateTimeFormat(pattern = "yyyy.MM")
     @Column(length = 20)
     private Date first_reg;
