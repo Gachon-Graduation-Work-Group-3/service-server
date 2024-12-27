@@ -12,4 +12,8 @@ include 'domain:common'
 findProject(':domain:common')?.name = 'common'
 include 'domain:car'
 findProject(':domain:car')?.name = 'car'
+include 'storage:redis'
+findProject(':storage:redis')?.name = 'redis'
+include 'storage:redis'
+findProject(':storage:redis')?.name = 'redis'
 

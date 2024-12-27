@@ -13,6 +13,16 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Table(indexes = {
+        @Index(name = "idx_manufacturer", columnList = "manufacturer"),
+        @Index(name = "idx_model", columnList = "model"),
+        @Index(name = "idx_submodel", columnList = "submodel"),
+        @Index(name = "idx_grade", columnList = "grade"),
+        @Index(name = "idx_price", columnList = "price"),
+        @Index(name = "idx_age", columnList = "age"),
+        @Index(name = "idx_color", columnList = "color"),
+        @Index(name = "idx_mileage", columnList = "mileage")
+})
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +51,7 @@ public class Car {
     private String number;
 
     @Column(length = 10)
-    private String fuelEff;
+    private String fuelEfficient;
 
     @DateTimeFormat(pattern = "yyyy.MM")
     @Column(length = 20)
@@ -70,10 +80,10 @@ public class Car {
     private String engine;
 
     @Column()
-    private String maxOut;
+    private Float maxOut;
 
     @Column()
-    private String torque;
+    private Float torque;
 
     @Column()
     private String weight;
@@ -102,6 +112,7 @@ public class Car {
     @Column()
     private Integer rearWarn;
 
+
     @Column()
     private Integer rearSensor;
 
@@ -118,6 +129,9 @@ public class Car {
     private Integer aroundView;
 
     @Column()
+    private Integer heatHandle;
+
+    @Column()
     private Integer autoLight;
 
     @Column()
@@ -131,4 +145,62 @@ public class Car {
 
     @Column()
     private Integer naviNon;
+
+    @Column()
+    private Integer insurCount;
+
+    @Column()
+    private Integer ownerChange;
+
+    @Column()
+    private Integer total_loss;
+
+    @Column()
+    private Integer floodTotalLoss;
+
+    @Column()
+    private Integer floodPartLoss;
+
+    @Column()
+    private Integer theft;
+
+    @Column()
+    private Integer myDamageCount;
+
+    @Column()
+    private Integer myDamageAmount;
+
+    @Column()
+    private Integer otherDamageCount;
+
+    @Column()
+    private Integer otherDamageAmount;
+
+    @Column()
+    private Integer panel;
+
+    @Column()
+    private Integer replaceCount;
+
+    @Column()
+    private Integer corrostion;
+
+    @Column()
+    private Integer floodStatus;
+
+    @Column()
+    private Integer illegalModification;
+
+    @Column()
+    private String manufacturer;
+
+    @Column()
+    private String model;
+
+    @Column()
+    private String submodel;
+
+    @Column()
+    private String grade;
+
 }

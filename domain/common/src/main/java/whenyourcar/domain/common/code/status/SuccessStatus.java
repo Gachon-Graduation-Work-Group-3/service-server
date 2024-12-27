@@ -15,6 +15,7 @@ public enum SuccessStatus implements BaseCode {
 
     CAR_MAIN_PAGE_SUCCESS(HttpStatus.OK, "CAR2001", "car list search success"),
     CAR_DESC_SUCCESS(HttpStatus.OK, "CAR2002", "car desc search success"),
+    CAR_DETAIL_SUCCESS(HttpStatus.OK, "CAR2003", "car detail list search success"),
     ;
 
     private final HttpStatus httpStatus;

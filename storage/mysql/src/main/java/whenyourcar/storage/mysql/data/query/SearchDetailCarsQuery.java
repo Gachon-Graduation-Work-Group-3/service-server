@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
-public class MainPageQuery {
+public class SearchDetailCarsQuery {
     private Long carId;
     private String name;
     private Date age;

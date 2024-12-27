@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface CarService {
-    Page<CarResponse.MainPageResponse> getCars(Pageable pageable, Date minAge, Date maxAge, Integer minMileage, Integer maxMileage, Integer minPrice, Integer maxPrice, String color);
-    CarResponse.DescResponse getCarDesc(Long carId);
+    Page<CarResponse.SearchResponse> searchCarsService(Pageable pageable, Date minAge, Date maxAge, Integer minMileage, Integer maxMileage, Integer minPrice, Integer maxPrice, String color);
+    CarResponse.DescResponse searchDescriptionService(Long carId);
+
+    Page<CarResponse.DetailSearchResponse> searchDetailCarsService(Pageable pageable, String manu, String model, String submodel, String grade);
 }

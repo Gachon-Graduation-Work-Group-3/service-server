@@ -25,7 +25,7 @@ import java.util.List;
 public class CarController {
     private final CarFacade carFacade;
     @GetMapping("/search")
-    public ApiResponse<Page<CarResponse.MainPageResponse>> getCars(
+    public ApiResponse<Page<CarResponse.SearchResponse>> searchCars(
             @RequestParam Integer page,
             @RequestParam Integer size,
             @RequestParam(required = false)
@@ -39,14 +39,29 @@ public class CarController {
             @RequestParam(required = false) String color
     ) {
         return ApiResponse.onSuccess(SuccessStatus.CAR_MAIN_PAGE_SUCCESS,
-                carFacade.getCars(PageRequest.of(page, size),
+                carFacade.searchCars(PageRequest.of(page, size),
                         minAge, maxAge, minMileage, maxMileage, minPrice, maxPrice, color));
     }
 
     @GetMapping("/description")
-    public ApiResponse<CarResponse.DescResponse> getCarDesc(
+    public ApiResponse<CarResponse.DescResponse> searchDescription(
             @RequestParam Long carId
     ) {
-        return ApiResponse.onSuccess(SuccessStatus.CAR_DESC_SUCCESS, carFacade.getCarDesc(carId));
+        return ApiResponse.onSuccess(SuccessStatus.CAR_DESC_SUCCESS, carFacade.searchDescription(carId));
+    }
+
+    @GetMapping("/search/detail")
+    public ApiResponse<Page<CarResponse.DetailSearchResponse>> searchDetailCars (
+            @RequestParam Integer page,
+            @RequestParam Integer size,
+            @RequestParam(required = false) String manu,
+            @RequestParam(required = false) String model,
+            @RequestParam(required = false) String submodel,
+            @RequestParam(required = false) String grade
+    ) {
+        return ApiResponse.onSuccess(SuccessStatus.CAR_DETAIL_SUCCESS, carFacade.searchDetailCars(
+                PageRequest.of(page, size),
+                manu, model, submodel, grade
+        ));
     }
 }

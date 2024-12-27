@@ -16,10 +16,15 @@ import java.util.List;
 public class CarFacade {
     private final CarService carService;
 
-    public Page<CarResponse.MainPageResponse> getCars(Pageable pageable, Date minAge, Date maxAge, Integer minMileage, Integer maxMileage, Integer minPrice, Integer maxPrice, String color) {
-        return carService.getCars(pageable, minAge, maxAge, minMileage, maxMileage, minPrice, maxPrice,color);
+    public Page<CarResponse.SearchResponse> searchCars(Pageable pageable, Date minAge, Date maxAge, Integer minMileage, Integer maxMileage, Integer minPrice, Integer maxPrice, String color) {
+        return carService.searchCarsService(pageable, minAge, maxAge, minMileage, maxMileage, minPrice, maxPrice,color);
     }
 
-    public CarResponse.DescResponse getCarDesc(Long carId) { return carService.getCarDesc(carId); }
+    public CarResponse.DescResponse searchDescription(Long carId) { return carService.searchDescriptionService(carId); }
+
+    public Page<CarResponse.DetailSearchResponse> searchDetailCars(Pageable pageable, String manu, String model, String submodel, String grade ) {
+        return carService.searchDetailCarsService(pageable, manu, model, submodel, grade);
+    }
+
 
 }
