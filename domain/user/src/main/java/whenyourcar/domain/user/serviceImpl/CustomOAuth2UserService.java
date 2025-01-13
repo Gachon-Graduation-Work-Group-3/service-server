@@ -10,11 +10,10 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import whenyourcar.domain.user.converter.UserConverter;
-import whenyourcar.domain.user.dto.OAuthAttributes;
-import whenyourcar.domain.user.dto.SessionUser;
+import whenyourcar.domain.user.dto.security.OAuthAttributes;
+import whenyourcar.domain.user.dto.security.SessionUser;
 import whenyourcar.storage.mysql.data.entity.User;
-import whenyourcar.storage.mysql.repository.UserRepository;
+import whenyourcar.storage.mysql.repository.user.UserCommonRepository;
 
 import java.util.Collections;
 
@@ -22,7 +21,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final HttpSession httpSession;
-    private final UserRepository userRepository;
+    private final UserCommonRepository userCommonRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -46,9 +45,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private User saveOrUpdate(OAuthAttributes authAttributes) {
-        User user = userRepository.findByEmail(authAttributes.getEmail())
+        User user = userCommonRepository.findByEmail(authAttributes.getEmail())
                 .map(entity-> entity.update(authAttributes.getName(), authAttributes.getPicture()))
                 .orElse(authAttributes.toEntity());
-        return userRepository.save(user);
+        return userCommonRepository.save(user);
     }
 }

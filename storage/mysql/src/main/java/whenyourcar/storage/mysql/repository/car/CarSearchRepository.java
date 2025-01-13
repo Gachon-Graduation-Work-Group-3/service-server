@@ -1,4 +1,4 @@
-package whenyourcar.storage.mysql.repository;
+package whenyourcar.storage.mysql.repository.car;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +11,7 @@ import whenyourcar.storage.mysql.data.query.SearchDetailCarsQuery;
 
 import java.util.Date;
 
-public interface CarRepository extends JpaRepository <Car, Long> {
+public interface CarSearchRepository extends JpaRepository <Car, Long> {
     @Query("select new whenyourcar.storage.mysql.data.query.SearchCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price) " +
             "from Car c " +
             "where ((:minAge is null and :maxAge is null) or (c.age <= :maxAge and c.age >= :minAge))" +

@@ -1,4 +1,4 @@
-package whenyourcar.domain.user.dto;
+package whenyourcar.domain.user.dto.security;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,11 +1,11 @@
-package whenyourcar.domain.user.dto;
+package whenyourcar.domain.user.dto.userCommon;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import whenyourcar.storage.mysql.data.enums.Role;
 
-public class UserRequest {
+public class UserCommonRequest {
     @Builder
     @Getter
     @AllArgsConstructor

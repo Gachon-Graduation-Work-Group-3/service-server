@@ -1,4 +1,4 @@
-package whenyourcar.domain.user.dto;
+package whenyourcar.domain.user.dto.userCommon;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-public class UserResponse {
+public class UserCommonResponse {
     @Builder
     @Getter
     @AllArgsConstructor

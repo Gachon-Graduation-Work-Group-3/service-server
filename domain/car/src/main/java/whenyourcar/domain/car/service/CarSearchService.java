@@ -5,9 +5,8 @@ import org.springframework.data.domain.Pageable;
 import whenyourcar.domain.car.dto.CarResponse;
 
 import java.util.Date;
-import java.util.List;
 
-public interface CarService {
+public interface CarSearchService {
     Page<CarResponse.SearchResponse> searchCarsService(Pageable pageable, Date minAge, Date maxAge, Integer minMileage, Integer maxMileage, Integer minPrice, Integer maxPrice, String color);
     CarResponse.DescResponse searchDescriptionService(Long carId);
 

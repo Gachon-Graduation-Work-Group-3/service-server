@@ -1,30 +1,18 @@
 package whenyourcar.presentation.security.config;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import whenyourcar.domain.user.serviceImpl.CustomOAuth2UserService;
-import whenyourcar.presentation.facade.AuthFacade;
-import whenyourcar.presentation.security.filter.JwtAuthFilter;
 import whenyourcar.presentation.security.handler.OAuth2FailureHandler;
 import whenyourcar.presentation.security.handler.OAuth2SuccessHandler;
-
-import java.io.IOException;
 
 @Configuration
 @RequiredArgsConstructor
@@ -41,6 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/","/index.html","/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "/login/oauth2/**").permitAll()
                         .requestMatchers("/api/car/**").permitAll()
+                        .requestMatchers("/favicon.ico").permitAll()
                         .anyRequest().authenticated())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/"))

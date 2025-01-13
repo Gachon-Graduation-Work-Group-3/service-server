@@ -1,29 +1,25 @@
-package whenyourcar.presentation.controller;
+package whenyourcar.presentation.controller.car;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import whenyourcar.domain.car.dto.CarResponse;
-import whenyourcar.domain.common.code.status.ErrorStatus;
 import whenyourcar.domain.common.code.status.SuccessStatus;
 import whenyourcar.presentation.apiPayload.ApiResponse;
-import whenyourcar.presentation.facade.CarFacade;
+import whenyourcar.presentation.facade.car.CarSearchFacade;
 
 import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/car")
-public class CarController {
-    private final CarFacade carFacade;
+public class CarSearchController {
+    private final CarSearchFacade carSearchFacade;
     @GetMapping("/search")
     public ApiResponse<Page<CarResponse.SearchResponse>> searchCars(
             @RequestParam Integer page,
@@ -39,7 +35,7 @@ public class CarController {
             @RequestParam(required = false) String color
     ) {
         return ApiResponse.onSuccess(SuccessStatus.CAR_MAIN_PAGE_SUCCESS,
-                carFacade.searchCars(PageRequest.of(page, size),
+                carSearchFacade.searchCars(PageRequest.of(page, size),
                         minAge, maxAge, minMileage, maxMileage, minPrice, maxPrice, color));
     }
 
@@ -47,7 +43,7 @@ public class CarController {
     public ApiResponse<CarResponse.DescResponse> searchDescription(
             @RequestParam Long carId
     ) {
-        return ApiResponse.onSuccess(SuccessStatus.CAR_DESC_SUCCESS, carFacade.searchDescription(carId));
+        return ApiResponse.onSuccess(SuccessStatus.CAR_DESC_SUCCESS, carSearchFacade.searchDescription(carId));
     }
 
     @GetMapping("/search/detail")
@@ -59,7 +55,7 @@ public class CarController {
             @RequestParam(required = false) String submodel,
             @RequestParam(required = false) String grade
     ) {
-        return ApiResponse.onSuccess(SuccessStatus.CAR_DETAIL_SUCCESS, carFacade.searchDetailCars(
+        return ApiResponse.onSuccess(SuccessStatus.CAR_DETAIL_SUCCESS, carSearchFacade.searchDetailCars(
                 PageRequest.of(page, size),
                 manu, model, submodel, grade
         ));

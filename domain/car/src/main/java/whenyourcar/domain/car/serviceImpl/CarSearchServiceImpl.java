@@ -6,19 +6,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import whenyourcar.domain.car.dto.CarConverter;
 import whenyourcar.domain.car.dto.CarResponse;
-import whenyourcar.domain.car.service.CarService;
+import whenyourcar.domain.car.service.CarSearchService;
 import whenyourcar.domain.common.code.exception.GeneralException;
 import whenyourcar.domain.common.code.status.ErrorStatus;
 import whenyourcar.storage.mysql.data.query.SearchCarsQuery;
 import whenyourcar.storage.mysql.data.query.SearchDetailCarsQuery;
-import whenyourcar.storage.mysql.repository.CarRepository;
+import whenyourcar.storage.mysql.repository.car.CarSearchRepository;
 
 import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
-public class CarServiceImpl implements CarService {
-    private final CarRepository carRepository;
+public class CarSearchServiceImpl implements CarSearchService {
+    private final CarSearchRepository carSearchRepository;
     private final CarConverter carConverter;
     @Override
     public Page<CarResponse.SearchResponse> searchCarsService(Pageable pageable,
@@ -26,7 +26,7 @@ public class CarServiceImpl implements CarService {
                                                       Integer minMileage, Integer maxMileage,
                                                       Integer minPrice, Integer maxPrice,
                                                       String color) {
-        Page<SearchCarsQuery> searchCarsQueries = carRepository.findTopViewCars(pageable,
+        Page<SearchCarsQuery> searchCarsQueries = carSearchRepository.findTopViewCars(pageable,
                 minAge,maxAge,
                 minMileage, maxMileage,
                 minPrice,maxPrice,
@@ -36,7 +36,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarResponse.DescResponse searchDescriptionService(Long carId) {
-        return carConverter.toDescResponse(carRepository.findById(carId)
+        return carConverter.toDescResponse(carSearchRepository.findById(carId)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.CAR_IS_NOT_EXIST)));
     }
 
@@ -44,9 +44,8 @@ public class CarServiceImpl implements CarService {
     public Page<CarResponse.DetailSearchResponse> searchDetailCarsService(Pageable pageable,
                                                                           String manu, String model,
                                                                           String submodel, String grade) {
-        Page<SearchDetailCarsQuery> searchDetailCarsQueries = carRepository.findTopViewDetailCars(pageable,
+        Page<SearchDetailCarsQuery> searchDetailCarsQueries = carSearchRepository.findTopViewDetailCars(pageable,
                 manu,model, submodel, grade);
         return carConverter.toSearchDetailCarsResponse(searchDetailCarsQueries);
-
     }
 }
