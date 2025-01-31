@@ -1,4 +1,4 @@
-package whenyourcar.domain.auth.exception;
+package whenyourcar.domain.common.code.exception;
 
 import whenyourcar.domain.common.code.BaseErrorCode;
 import whenyourcar.domain.common.code.status.ErrorStatus;

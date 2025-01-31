@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: user
+  datasource:
+    url: jdbc:mysql://10.0.1.110:3306/whenyourcar
+    username: user
+    password: '@Opyuhepl758'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 89666550859-tatdsspvgvt7v1meaiqqpslvv3g09r1e.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+  data:
+    redis:
+      host: 10.0.1.23
+      port: 6379
+      ssl:
+        enabled: true
+
+
+
+server:
+  servlet:
+    session:
+      timeout: 30m
+  port: 8080
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.session: DEBUG
+    org.springframework.data.redis: DEBUG
+
+

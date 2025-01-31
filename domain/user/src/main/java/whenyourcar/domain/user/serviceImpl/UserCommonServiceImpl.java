@@ -1,9 +1,11 @@
 package whenyourcar.domain.user.serviceImpl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import whenyourcar.domain.auth.exception.AuthenticationException;
+import whenyourcar.domain.common.code.exception.AuthenticationException;
 import whenyourcar.domain.common.code.status.ErrorStatus;
 import whenyourcar.domain.user.dto.security.SessionUser;
 import whenyourcar.domain.user.service.UserCommonService;
@@ -15,12 +17,15 @@ import whenyourcar.storage.mysql.repository.user.UserCommonRepository;
 public class UserCommonServiceImpl implements UserCommonService {
     private final UserCommonRepository userCommonRepository;
     @Override
-    public SessionUser getSessionUser(HttpSession httpSession) {
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        if (user == null) {
-            throw new AuthenticationException(ErrorStatus.USER_IS_NOT_EXIST);
-        }
-        return user;
+    public SessionUser getSessionUser(String email)  {
+        User user =  userCommonRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthenticationException(ErrorStatus.USER_IS_NOT_EXIST));
+        return SessionUser.builder()
+                .userId(user.getId())
+                .email(user.getEmail())
+                .name(user.getName())
+                .picture(user.getPicture())
+                .build();
     }
 
     @Override

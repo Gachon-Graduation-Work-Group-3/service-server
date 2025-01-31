@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import whenyourcar.domain.car.dto.CarConverter;
+import whenyourcar.domain.car.converter.CarConverter;
 import whenyourcar.domain.car.dto.CarResponse;
 import whenyourcar.domain.car.service.CarSearchService;
 import whenyourcar.domain.common.code.exception.GeneralException;

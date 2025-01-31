@@ -18,7 +18,9 @@ public class CarSearchFacade {
         return carSearchService.searchCarsService(pageable, minAge, maxAge, minMileage, maxMileage, minPrice, maxPrice,color);
     }
 
-    public CarResponse.DescResponse searchDescription(Long carId) { return carSearchService.searchDescriptionService(carId); }
+    public CarResponse.DescResponse searchDescription(Long carId) {
+        return carSearchService.searchDescriptionService(carId);
+    }
 
     public Page<CarResponse.DetailSearchResponse> searchDetailCars(Pageable pageable, String manu, String model, String submodel, String grade ) {
         return carSearchService.searchDetailCarsService(pageable, manu, model, submodel, grade);

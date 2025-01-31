@@ -1,5 +1,7 @@
 package whenyourcar.presentation.facade.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -16,19 +18,22 @@ public class UserLikeFacade {
     private final UserCommonService userCommonService;
     private final UserLikeService userLikeService;
 
-    public void postUserLike(HttpSession httpSession,
+    public void postUserLike( HttpServletRequest request,
                              Long carId) {
-        SessionUser sessionUser = userCommonService.getSessionUser(httpSession);
+        String email = request.getHeader("X-User-Email");
+        SessionUser sessionUser = userCommonService.getSessionUser(email);
         userLikeService.postUserLike(carId, sessionUser.getUserId());
     }
 
-    public UserLikeResponse.UserLikesResponse getUserLikes(HttpSession httpSession, Pageable pageable) {
-        SessionUser sessionUser = userCommonService.getSessionUser(httpSession);
+    public UserLikeResponse.UserLikesResponse getUserLikes(HttpServletRequest request, Pageable pageable)  {
+        String email = request.getHeader("X-User-Email");
+        SessionUser sessionUser = userCommonService.getSessionUser(email);
         return userLikeService.getUserLikes(sessionUser.getUserId(), pageable);
     }
 
-    public void deleteUserLike(HttpSession httpSession, Long userLikeId) {
-        SessionUser sessionUser = userCommonService.getSessionUser(httpSession);
+    public void deleteUserLike( HttpServletRequest request, Long userLikeId) {
+        String email = request.getHeader("X-User-Email");
+        SessionUser sessionUser = userCommonService.getSessionUser(email);
         userLikeService.deleteUserLike(sessionUser.getUserId(), userLikeId);
     }
 }
