@@ -17,16 +17,16 @@ public class SwaggerConfig {
                 .description("When Your Car 명세서")
                 .version("1.0.0");
 
-        String sessionSchemeName = "Session";
+        String sessionSchemeName = "X-User-Email";
 
-        // SecurityRequirement는 API 요청 시 필요한 인증 스키마를 정의
+
         SecurityRequirement securityRequirement = new SecurityRequirement().addList(sessionSchemeName);
 
         Components components = new Components()
                 .addSecuritySchemes(sessionSchemeName, new SecurityScheme()
-                        .name("SESSION")
+                        .name("X-User-Email")
                         .type(SecurityScheme.Type.APIKEY)
-                        .in(SecurityScheme.In.COOKIE));
+                        .in(SecurityScheme.In.HEADER));
 
         return new OpenAPI()
                 .info(info)

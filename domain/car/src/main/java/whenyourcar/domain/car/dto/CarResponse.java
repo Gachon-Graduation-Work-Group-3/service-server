@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import whenyourcar.storage.mysql.data.entity.Car;
+import whenyourcar.storage.mysql.data.entity.CarSale;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -26,6 +27,13 @@ public class CarResponse {
     @AllArgsConstructor
     public static class DescResponse{
         private Car car;
+    }
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    public static class DescSaleResponse{
+        private CarSale carSale;
     }
 
     @Builder

@@ -3,8 +3,10 @@ package whenyourcar.domain.car.converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
+import whenyourcar.domain.car.dto.CarRequest;
 import whenyourcar.domain.car.dto.CarResponse;
 import whenyourcar.storage.mysql.data.entity.Car;
+import whenyourcar.storage.mysql.data.entity.User;
 import whenyourcar.storage.mysql.data.query.SearchCarsQuery;
 import whenyourcar.storage.mysql.data.query.SearchDetailCarsQuery;
 

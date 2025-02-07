@@ -13,6 +13,7 @@ import whenyourcar.storage.mysql.data.entity.Car;
 import whenyourcar.storage.mysql.data.entity.User;
 import whenyourcar.storage.mysql.data.mapping.UserLike;
 import whenyourcar.storage.mysql.repository.car.CarCommonRepository;
+import whenyourcar.storage.mysql.repository.car.CarSaleRepository;
 import whenyourcar.storage.mysql.repository.user.UserCommonRepository;
 import whenyourcar.storage.mysql.repository.user.UserLikeRepository;
 

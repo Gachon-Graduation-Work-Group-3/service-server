@@ -3,10 +3,9 @@ package whenyourcar.storage.mysql.data.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import whenyourcar.storage.mysql.data.common.DateBaseEntity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -23,7 +22,7 @@ import java.util.List;
         @Index(name = "idx_color", columnList = "color"),
         @Index(name = "idx_mileage", columnList = "mileage")
 })
-public class Car {
+public class CarSale extends DateBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="carId")
@@ -50,8 +49,8 @@ public class Car {
     @Column(length = 10)
     private String number;
 
-    @Column(length = 10)
-    private String fuelEfficient;
+    @Column()
+    private Float fuelEfficient;
 
     @DateTimeFormat(pattern = "yyyy.MM")
     @Column(length = 20)
@@ -68,7 +67,7 @@ public class Car {
     private String fuel;
 
     @Column()
-    private String cc;
+    private Integer cc;
 
     @Column()
     private Integer insure;
@@ -86,13 +85,13 @@ public class Car {
     private Float torque;
 
     @Column()
-    private String weight;
+    private Float weight;
 
     @Column()
     private String brand;
 
     @Column()
-    private String newPrice;
+    private Integer newPrice;
 
     @Column()
     private Integer sunroof;
@@ -202,4 +201,8 @@ public class Car {
 
     @Column()
     private String grade;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
