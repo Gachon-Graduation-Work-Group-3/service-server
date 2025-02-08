@@ -1,6 +1,6 @@
 package whenyourcar.api.web.controller.user;
 
-import whenyourcar.common.annotation.EmailParam;
+import jakarta.servlet.http.HttpServletRequest;
 import whenyourcar.common.code.status.SuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,8 @@ public class UserCommonController {
     private final UserCommonFacade userCommonFacade;
 
     @GetMapping("/profile")
-    public ApiResponse<UserCommonResponse.UserProfileResponseDto> getProfile(@EmailParam String email)  {
+    public ApiResponse<UserCommonResponse.UserProfileResponseDto> getProfile(HttpServletRequest httpServletRequest)  {
+        String email = httpServletRequest.getHeader("X-User-Email");
         return ApiResponse.onSuccess(SuccessStatus.USER_PROFILE_SUCCESS, userCommonFacade.getUserProfile(email));
     }
 }

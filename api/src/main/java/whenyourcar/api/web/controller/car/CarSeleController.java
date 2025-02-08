@@ -1,6 +1,6 @@
 package whenyourcar.api.web.controller.car;
 
-import whenyourcar.common.annotation.EmailParam;
+import jakarta.servlet.http.HttpServletRequest;
 import whenyourcar.common.code.status.SuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,9 +21,10 @@ public class CarSeleController {
     private final CarSaleFacade carSaleFacade;
     @PostMapping("/article")
     public ApiResponse<Void> postSaleCar(
-            @EmailParam String email,
+            HttpServletRequest httpServletRequest,
             @RequestBody CarSaleRequest.CarSaleRequestDto carSaleRequest
             ) {
+        String email = httpServletRequest.getHeader("X-User-Email");
         carSaleFacade.postSaleCar(carSaleRequest, email);
         return ApiResponse.onSuccess(SuccessStatus.CAR_POST_SALE_SUCCESS, null);
     }
