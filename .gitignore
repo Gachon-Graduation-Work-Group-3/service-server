@@ -33,9 +33,9 @@ out/
 /nbdist/
 /.nb-gradle/
 
-presentation/src/main/resources/application.yml
-presentation/src/main/resources/application-deploy.yml
-presentation/src/main/resources/keystore.p12
+api/src/main/resources/application.yml
+api/src/main/resources/application-deploy.yml
+api/src/main/resources/keystore.p12
 
 
 ### VS Code ###
