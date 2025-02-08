@@ -1,13 +1,9 @@
 rootProject.name = 'whenyourcar'
 
 
-include 'presentation'
-include 'storage:mysql'
-findProject(':storage:mysql')?.name = 'mysql'
-include 'domain:user'
-findProject(':domain:user')?.name = 'user'
-include 'domain:common'
-findProject(':domain:common')?.name = 'common'
-include 'domain:car'
-findProject(':domain:car')?.name = 'car'
+include 'api'
+include 'common'
+include 'domain'
+include 'application'
+include 'infra'
 
