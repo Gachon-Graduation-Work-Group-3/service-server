@@ -75,6 +75,7 @@ public class CarSaleConverter {
                 .color(carSaleRequest.getColor())
                 .view(0)
                 .user(user)
+                .isSaled(false)
                 .build();
     }
 

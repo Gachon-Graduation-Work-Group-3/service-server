@@ -30,6 +30,16 @@ public class CarSeleController {
         return ApiResponse.onSuccess(SuccessStatus.CAR_POST_SALE_SUCCESS, null);
     }
 
+    @PatchMapping("/completed")
+    public ApiResponse<Void> patchCarToSaleCompleted(
+            HttpServletRequest httpServletRequest,
+            @RequestParam Long carId
+    ){
+        String email = httpServletRequest.getHeader("X-User-Email");
+        carSaleFacade.patchCarToSaleCompleted(carId, email);
+        return ApiResponse.onSuccess(SuccessStatus.CAR_COMPLETE_SALE_SUCCESS, null);
+    }
+
     @GetMapping("/search/filters/info")
     public ApiResponse<Page<CarCommonResponse.SearchResponseDto>> searchInfoSaleCars(
             @RequestParam Integer page,
@@ -72,5 +82,4 @@ public class CarSeleController {
                 manu, model, submodel, grade
         ));
     }
-
 }

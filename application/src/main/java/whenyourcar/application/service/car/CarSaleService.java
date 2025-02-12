@@ -11,6 +11,7 @@ import java.util.Date;
 
 public interface CarSaleService {
     public void postSaleCar(CarSaleRequest.CarSaleRequestDto carSaleRequest, User user);
+    public void patchCarToSaleCompleted(Long carId, String email);
     Page<CarCommonResponse.SearchResponseDto> searchCarsService(Pageable pageable, Date minAge, Date maxAge, Integer minMileage, Integer maxMileage, Integer minPrice, Integer maxPrice, String color);
     CarCommonResponse.SearchDescriptionSaleResponseDto searchDescriptionService(CarSale carSale);
     Page<CarCommonResponse.SearchDetailResponseDto> searchDetailCarsService(Pageable pageable, String manu, String model, String submodel, String grade);

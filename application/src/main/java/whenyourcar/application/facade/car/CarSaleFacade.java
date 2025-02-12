@@ -29,6 +29,10 @@ public class CarSaleFacade {
         carSaleService.postSaleCar(carSaleRequest, user);
     }
 
+    public void patchCarToSaleCompleted(Long carId, String email) {
+        carSaleService.patchCarToSaleCompleted(carId, email);
+    }
+
     public Page<CarCommonResponse.SearchResponseDto> searchCars(Pageable pageable, Date minAge, Date maxAge, Integer minMileage, Integer maxMileage, Integer minPrice, Integer maxPrice, String color) {
         return carSaleService.searchCarsService(pageable, minAge, maxAge, minMileage, maxMileage, minPrice, maxPrice,color);
     }

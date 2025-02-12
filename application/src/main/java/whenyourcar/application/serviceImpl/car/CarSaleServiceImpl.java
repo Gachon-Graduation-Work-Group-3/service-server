@@ -30,6 +30,13 @@ public class CarSaleServiceImpl implements CarSaleService {
     }
 
     @Override
+    public void patchCarToSaleCompleted(Long carId, String email) {
+        if (carSaleRepository.changeToSaleCompleted(carId, email) < 1){
+            throw new GeneralException(ErrorStatus.CAR_IS_NOT_EXIST);
+        }
+    }
+
+    @Override
     public Page<CarCommonResponse.SearchResponseDto> searchCarsService(Pageable pageable, Date minAge, Date maxAge, Integer minMileage, Integer maxMileage, Integer minPrice, Integer maxPrice, String color) {
         Page<SearchCarsQuery> searchCarsQueries = carSaleRepository.findTopViewCars(pageable,
                 minAge,maxAge,
