@@ -1,6 +1,7 @@
 package whenyourcar.api.web.controller.car;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import whenyourcar.common.code.status.SuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -50,9 +51,11 @@ public class CarSeleController {
 
     @GetMapping("/search/description")
     public ApiResponse<CarCommonResponse.SearchDescriptionSaleResponseDto> searchDescription(
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse,
             @RequestParam Long carId
     ) {
-        return ApiResponse.onSuccess(SuccessStatus.CAR_DESC_SUCCESS, carSaleFacade.searchDescription(carId));
+        return ApiResponse.onSuccess(SuccessStatus.CAR_DESC_SUCCESS, carSaleFacade.searchDescription(carId, httpServletRequest, httpServletResponse));
     }
 
     @GetMapping("/search/filters/model")

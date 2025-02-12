@@ -1,5 +1,9 @@
 package whenyourcar.application.facade.car;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import whenyourcar.application.service.car.CarSaleViewService;
+import whenyourcar.domain.entity.CarSale;
 import whenyourcar.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +21,7 @@ import java.util.Date;
 public class CarSaleFacade {
     private final CarSaleService carSaleService;
     private final UserCommonService userCommonService;
+    private final CarSaleViewService carSaleViewService;
 
     public void postSaleCar(CarSaleRequest.CarSaleRequestDto carSaleRequest,
                             String email) {
@@ -28,8 +33,12 @@ public class CarSaleFacade {
         return carSaleService.searchCarsService(pageable, minAge, maxAge, minMileage, maxMileage, minPrice, maxPrice,color);
     }
 
-    public CarCommonResponse.SearchDescriptionSaleResponseDto searchDescription(Long carId) {
-        return carSaleService.searchDescriptionService(carId);
+    public CarCommonResponse.SearchDescriptionSaleResponseDto searchDescription(Long carId,
+                                                                                HttpServletRequest httpServletRequest,
+                                                                                HttpServletResponse httpServletResponse) {
+        CarSale carSale = carSaleService.findCarSaleById(carId);
+        httpServletResponse.addCookie(carSaleViewService.increaseViewCount(carSale.getCarId(), httpServletRequest));
+        return carSaleService.searchDescriptionService(carSale);
     }
 
     public Page<CarCommonResponse.SearchDetailResponseDto> searchDetailCars(Pageable pageable, String manu, String model, String submodel, String grade ) {

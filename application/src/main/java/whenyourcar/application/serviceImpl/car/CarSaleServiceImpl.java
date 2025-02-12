@@ -2,6 +2,7 @@ package whenyourcar.application.serviceImpl.car;
 
 import whenyourcar.common.code.exception.GeneralException;
 import whenyourcar.common.code.status.ErrorStatus;
+import whenyourcar.domain.entity.CarSale;
 import whenyourcar.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import whenyourcar.domain.query.SearchCarsQuery;
 import whenyourcar.domain.query.SearchDetailCarsQuery;
 import whenyourcar.domain.repository.car.CarSaleRepository;
-import whenyourcar.domain.repository.user.UserCommonRepository;
 import whenyourcar.application.converter.car.CarSaleConverter;
 import whenyourcar.application.dto.car.sale.CarSaleRequest;
 import whenyourcar.application.dto.car.search.CarCommonResponse;
@@ -22,7 +22,6 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class CarSaleServiceImpl implements CarSaleService {
     private final CarSaleRepository carSaleRepository;
-    private final UserCommonRepository userCommonRepository;
     private final CarSaleConverter carSaleConverter;
 
     @Override
@@ -41,9 +40,8 @@ public class CarSaleServiceImpl implements CarSaleService {
     }
 
     @Override
-    public CarCommonResponse.SearchDescriptionSaleResponseDto searchDescriptionService(Long carId) {
-        return carSaleConverter.toDescResponse(carSaleRepository.findById(carId)
-                .orElseThrow(() -> new GeneralException(ErrorStatus.CAR_IS_NOT_EXIST)));
+    public CarCommonResponse.SearchDescriptionSaleResponseDto searchDescriptionService(CarSale carSale) {
+        return carSaleConverter.toDescResponse(carSale);
     }
 
     @Override
@@ -54,4 +52,17 @@ public class CarSaleServiceImpl implements CarSaleService {
                 manu,model, submodel, grade);
         return carSaleConverter.toSearchDetailCarsResponse(searchDetailCarsQueries);
     }
+
+    @Override
+    public void increaseSaleCarView(Long carId) {
+        carSaleRepository.increaseViewCount(carId);
+    }
+
+    @Override
+    public CarSale findCarSaleById(Long carId) {
+        return carSaleRepository.findById(carId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.CAR_IS_NOT_EXIST));
+    }
+
+
 }

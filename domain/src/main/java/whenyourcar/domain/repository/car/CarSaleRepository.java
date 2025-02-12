@@ -1,5 +1,7 @@
 package whenyourcar.domain.repository.car;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import whenyourcar.domain.entity.CarSale;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,4 +41,11 @@ public interface CarSaleRepository extends JpaRepository<CarSale, Long> {
                                                       @Param("model") String model,
                                                       @Param("submodel") String submodel,
                                                       @Param("grade") String grade);
+
+    @Transactional
+    @Modifying
+    @Query("update CarSale c " +
+            "set c.view = c.view + 1 " +
+            "where c.carId = :carId")
+    void increaseViewCount(@Param("carId") Long carId);
 }
