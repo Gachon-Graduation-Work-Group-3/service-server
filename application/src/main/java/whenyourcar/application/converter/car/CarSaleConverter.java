@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class CarSaleConverter {
-    public CarSale toSaleCar(CarSaleRequest.CarSaleRequestDto carSaleRequest, User user) {
+    public CarSale toSaleCar(CarSaleRequest.CarSaleRequestDto carSaleRequest, User user, List<String> imagesURLs) {
+        String images = String.join(",", imagesURLs);
         return CarSale.builder()
                 .cc(carSaleRequest.getCc())
                 .color(carSaleRequest.getColor())
@@ -28,7 +29,6 @@ public class CarSaleConverter {
                 .autoLight(carSaleRequest.getAutoLight())
                 .corrostion(carSaleRequest.getCorrosion())
                 .engine(carSaleRequest.getEngine())
-                .image(carSaleRequest.getImage())
                 .first_reg(carSaleRequest.getFirstReg())
                 .floodPartLoss(carSaleRequest.getFloodPartLoss())
                 .floodStatus(carSaleRequest.getFloodStatus())
@@ -76,6 +76,7 @@ public class CarSaleConverter {
                 .view(0)
                 .user(user)
                 .isSaled(false)
+                .image(images)
                 .build();
     }
 

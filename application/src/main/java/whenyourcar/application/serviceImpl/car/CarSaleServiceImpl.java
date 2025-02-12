@@ -17,6 +17,7 @@ import whenyourcar.application.dto.car.search.CarCommonResponse;
 import whenyourcar.application.service.car.CarSaleService;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +26,8 @@ public class CarSaleServiceImpl implements CarSaleService {
     private final CarSaleConverter carSaleConverter;
 
     @Override
-    public void postSaleCar(CarSaleRequest.CarSaleRequestDto carSaleRequest, User user) {
-        carSaleRepository.save(carSaleConverter.toSaleCar(carSaleRequest, user));
+    public void postSaleCar(CarSaleRequest.CarSaleRequestDto carSaleRequest, User user, List<String> imagesURLs) {
+        carSaleRepository.save(carSaleConverter.toSaleCar(carSaleRequest, user, imagesURLs));
     }
 
     @Override

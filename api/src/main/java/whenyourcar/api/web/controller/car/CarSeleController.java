@@ -2,6 +2,8 @@ package whenyourcar.api.web.controller.car;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 import whenyourcar.common.code.status.SuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,20 +15,23 @@ import whenyourcar.application.dto.car.sale.CarSaleRequest;
 import whenyourcar.application.dto.car.search.CarCommonResponse;
 import whenyourcar.application.facade.car.CarSaleFacade;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/car/sale")
 public class CarSeleController {
     private final CarSaleFacade carSaleFacade;
-    @PostMapping("/article")
+    @PostMapping(value = "/article", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<Void> postSaleCar(
             HttpServletRequest httpServletRequest,
-            @RequestBody CarSaleRequest.CarSaleRequestDto carSaleRequest
-            ) {
+            @RequestPart List<MultipartFile> images,
+            @RequestPart CarSaleRequest.CarSaleRequestDto carSaleRequest
+            ) throws Exception {
         String email = httpServletRequest.getHeader("X-User-Email");
-        carSaleFacade.postSaleCar(carSaleRequest, email);
+        carSaleFacade.postSaleCar(carSaleRequest, email, images);
         return ApiResponse.onSuccess(SuccessStatus.CAR_POST_SALE_SUCCESS, null);
     }
 

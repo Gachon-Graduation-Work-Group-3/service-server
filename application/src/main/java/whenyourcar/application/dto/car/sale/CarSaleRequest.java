@@ -62,7 +62,6 @@ public class CarSaleRequest {
         private String link;
         private String name;
         private String manufacturer;
-        private String image;
         private String color;
         @DateTimeFormat(pattern = "yyyy.MM")
         private Date firstReg;

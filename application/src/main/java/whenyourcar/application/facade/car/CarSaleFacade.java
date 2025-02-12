@@ -2,6 +2,7 @@ package whenyourcar.application.facade.car;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
 import whenyourcar.application.service.car.CarSaleViewService;
 import whenyourcar.domain.entity.CarSale;
 import whenyourcar.domain.entity.User;
@@ -13,8 +14,12 @@ import whenyourcar.application.dto.car.sale.CarSaleRequest;
 import whenyourcar.application.dto.car.search.CarCommonResponse;
 import whenyourcar.application.service.car.CarSaleService;
 import whenyourcar.application.service.user.UserCommonService;
+import whenyourcar.infra.objectStorage.service.ObjectStorageService;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +27,17 @@ public class CarSaleFacade {
     private final CarSaleService carSaleService;
     private final UserCommonService userCommonService;
     private final CarSaleViewService carSaleViewService;
+    private final ObjectStorageService objectStorageService;
 
     public void postSaleCar(CarSaleRequest.CarSaleRequestDto carSaleRequest,
-                            String email) {
+                            String email,
+                            List<MultipartFile> images) throws Exception {
         User user = userCommonService.getUserByEmail(email);
-        carSaleService.postSaleCar(carSaleRequest, user);
+        List<String> imagesURLs = new ArrayList<>();
+        for (MultipartFile image: images) {
+            imagesURLs.add(objectStorageService.uploadFile(image));
+        }
+        carSaleService.postSaleCar(carSaleRequest, user, imagesURLs);
     }
 
     public void patchCarToSaleCompleted(Long carId, String email) {

@@ -26,7 +26,4 @@ public class CarCommonFacade {
         return carCommonService.searchDetailCarsService(pageable, manu, model, submodel, grade);
     }
 
-
-
-
 }

@@ -37,6 +37,8 @@ api/src/main/resources/application.yml
 api/src/main/resources/application-deploy.yml
 api/src/main/resources/keystore.p12
 
+##oci setting
+.oci/**
 
 ### VS Code ###
 .vscode/
