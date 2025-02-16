@@ -13,11 +13,18 @@ import whenyourcar.application.service.user.UserCommonService;
 @RequiredArgsConstructor
 public class UserCommonServiceImpl implements UserCommonService {
     private final UserCommonRepository userCommonRepository;
-    private final UserCommonConverter userCommonConverter;
     @Override
     public User getUserByEmail(String email)  {
         User user =  userCommonRepository.findByEmail(email)
                 .orElseThrow(() -> new AuthenticationException(ErrorStatus.USER_IS_NOT_EXIST));
         return user;
     }
+
+    @Override
+    public User getUserById(Long userId) {
+        User user = userCommonRepository.findUserById(userId)
+                .orElseThrow(() -> new AuthenticationException(ErrorStatus.USER_IS_NOT_EXIST));
+        return user;
+    }
+
 }

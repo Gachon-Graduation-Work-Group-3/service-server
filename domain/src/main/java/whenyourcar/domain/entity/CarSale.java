@@ -31,7 +31,7 @@ public class CarSale extends DateBaseEntity {
     @Column(length = 300)
     private String link;
 
-    @Column(length = 300)
+    @Column(length = 10000)
     private String image;
 
     @Column(length = 20)
@@ -207,5 +207,5 @@ public class CarSale extends DateBaseEntity {
     private User user;
 
     @Column()
-    private boolean isSaled;
+    private boolean saleStatus;
 }

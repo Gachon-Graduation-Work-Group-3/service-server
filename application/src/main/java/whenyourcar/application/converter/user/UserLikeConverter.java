@@ -5,7 +5,7 @@ import whenyourcar.domain.entity.User;
 import whenyourcar.domain.entity.UserLike;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-import whenyourcar.domain.query.SearchCarsQuery;
+import whenyourcar.domain.query.car.SearchCarsQuery;
 import whenyourcar.application.dto.user.like.UserLikeResponse;
 
 @Component

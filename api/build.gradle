@@ -14,6 +14,9 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation "org.springframework.boot:spring-boot-starter-reactor-netty"
+
 
     implementation 'com.oracle.oci.sdk:oci-java-sdk:3.38.0'
     implementation 'com.oracle.oci.sdk:oci-java-sdk-common:3.38.0'

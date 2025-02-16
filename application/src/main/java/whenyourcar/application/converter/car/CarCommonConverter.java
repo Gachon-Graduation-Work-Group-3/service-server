@@ -4,8 +4,8 @@ import whenyourcar.domain.entity.Car;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
-import whenyourcar.domain.query.SearchCarsQuery;
-import whenyourcar.domain.query.SearchDetailCarsQuery;
+import whenyourcar.domain.query.car.SearchCarsQuery;
+import whenyourcar.domain.query.car.SearchDetailCarsQuery;
 import whenyourcar.application.dto.car.search.CarCommonResponse;
 
 import java.util.List;

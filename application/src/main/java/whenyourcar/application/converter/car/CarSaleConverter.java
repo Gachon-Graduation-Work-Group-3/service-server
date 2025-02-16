@@ -1,12 +1,13 @@
 package whenyourcar.application.converter.car;
 
+import whenyourcar.application.dto.car.common.CarSaleInfoDto;
 import whenyourcar.domain.entity.CarSale;
 import whenyourcar.domain.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
-import whenyourcar.domain.query.SearchCarsQuery;
-import whenyourcar.domain.query.SearchDetailCarsQuery;
+import whenyourcar.domain.query.car.SearchCarsQuery;
+import whenyourcar.domain.query.car.SearchDetailCarsQuery;
 import whenyourcar.application.dto.car.sale.CarSaleRequest;
 import whenyourcar.application.dto.car.search.CarCommonResponse;
 
@@ -75,7 +76,7 @@ public class CarSaleConverter {
                 .color(carSaleRequest.getColor())
                 .view(0)
                 .user(user)
-                .isSaled(false)
+                .saleStatus(false)
                 .image(images)
                 .build();
     }
@@ -112,5 +113,22 @@ public class CarSaleConverter {
                         .build())
                 .collect(Collectors.toList());
         return new PageImpl<>(searchResponses, searchDetailCarsQueries.getPageable(), searchDetailCarsQueries.getTotalElements());
+    }
+
+    public CarSaleInfoDto toCarSaleInfoDto(CarSale carSale) {
+        return CarSaleInfoDto.builder()
+                .carName(carSale.getName())
+                .saleStatus(carSale.isSaleStatus())
+                .age(carSale.getAge())
+                .brand(carSale.getBrand())
+                .fuelEfficient(carSale.getFuelEfficient())
+                .price(carSale.getPrice())
+                .image(carSale.getImage())
+                .maxOut(carSale.getMaxOut())
+                .mileage(carSale.getMileage())
+                .cc(carSale.getCc())
+                .newPrice(carSale.getNewPrice())
+                .view(carSale.getView())
+                .build();
     }
 }

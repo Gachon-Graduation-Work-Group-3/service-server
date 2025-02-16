@@ -13,6 +13,8 @@ public enum ErrorStatus implements BaseErrorCode {
     USER_IS_NOT_EXIST(HttpStatus.UNAUTHORIZED, "USER2012", "user is not exist"),
 
     CAR_IS_NOT_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "CAR2010", "car is not exist"),
+    ROOM_IS_NOT_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "ROOM2010", "room is not exist"),
+
     ;
 
     private final HttpStatus httpStatus;

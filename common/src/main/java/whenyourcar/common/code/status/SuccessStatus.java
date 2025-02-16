@@ -22,6 +22,12 @@ public enum SuccessStatus implements BaseCode {
     CAR_DETAIL_SUCCESS(HttpStatus.OK, "CAR2003", "car detail list search success"),
     CAR_POST_SALE_SUCCESS(HttpStatus.OK, "CAR2004", "car sell post success"),
     CAR_COMPLETE_SALE_SUCCESS(HttpStatus.OK, "CAR2005", "change to car saled success"),
+
+    CHAT_ROOM_CREATE_SUCCESS(HttpStatus.OK, "CHAT2000", "create chat room success"),
+    CHAT_SEARCH_ROOM_SUCCESS(HttpStatus.OK, "CHAT2001", "search chat room success"),
+
+    CHAT_SEARCH_MESSAGE_SUCCESS(HttpStatus.OK, "MESSAGE2001", "search chat message success"),
+
     ;
 
     private final HttpStatus httpStatus;

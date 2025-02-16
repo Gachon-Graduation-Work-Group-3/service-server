@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
-import whenyourcar.domain.query.SearchCarsQuery;
+import whenyourcar.domain.query.car.SearchCarsQuery;
 
 public class UserLikeResponse {
     @Builder

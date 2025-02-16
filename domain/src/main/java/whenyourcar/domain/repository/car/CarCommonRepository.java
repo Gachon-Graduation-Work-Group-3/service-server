@@ -7,14 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import whenyourcar.domain.query.SearchCarsQuery;
-import whenyourcar.domain.query.SearchDetailCarsQuery;
+import whenyourcar.domain.query.car.SearchCarsQuery;
+import whenyourcar.domain.query.car.SearchDetailCarsQuery;
 
 import java.util.Date;
 import java.util.Optional;
 
 public interface CarCommonRepository extends JpaRepository<Car, Long> {
-    @Query("select new whenyourcar.domain.query.SearchCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price) " +
+    @Query("select new whenyourcar.domain.query.car.SearchCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price) " +
             "from Car c " +
             "where ((:minAge is null and :maxAge is null) or (c.age <= :maxAge and c.age >= :minAge))" +
             "and ((:minMileage is null and :maxMileage is null) or (c.mileage <= :maxMileage and c.mileage >= :minMileage))" +
@@ -30,7 +30,7 @@ public interface CarCommonRepository extends JpaRepository<Car, Long> {
                                           @Param("maxPrice") Integer maxPrice,
                                           @Param("color") String color);
 
-    @Query("select new whenyourcar.domain.query.SearchDetailCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price) " +
+    @Query("select new whenyourcar.domain.query.car.SearchDetailCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price) " +
             "from Car c " +
             "where ((:manu is null ) or (:manu = c.manufacturer))" +
             "and ((:model is null ) or (:model = c.model))" +

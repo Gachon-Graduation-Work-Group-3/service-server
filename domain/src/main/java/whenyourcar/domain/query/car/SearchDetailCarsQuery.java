@@ -1,4 +1,4 @@
-package whenyourcar.domain.query;
+package whenyourcar.domain.query.car;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
-public class SearchCarsQuery {
+public class SearchDetailCarsQuery {
     private Long carId;
     private String name;
     private Date age;
