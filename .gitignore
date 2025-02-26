@@ -35,6 +35,7 @@ out/
 
 api/src/main/resources/application.yml
 api/src/main/resources/application-deploy.yml
+api/src/main/resources/application-local.yml
 api/src/main/resources/keystore.p12
 
 ##oci setting
