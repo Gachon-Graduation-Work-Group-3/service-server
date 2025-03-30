@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.25' // Kotlin 사용 가능하게 추가
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25' // Spring과 연동
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation "org.springframework.boot:spring-boot-starter-reactor-netty"
+    implementation 'org.springframework.amqp:spring-rabbit'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+
+
+    implementation project(':domain')
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(17) // Java 17 기반으로 Kotlin 컴파일
+}
+
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
