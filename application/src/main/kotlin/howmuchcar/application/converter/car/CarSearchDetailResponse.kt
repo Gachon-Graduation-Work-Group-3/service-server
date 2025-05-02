@@ -9,6 +9,7 @@ data class CarSearchDetailResponse (
     val age: LocalDate?,
     val image: String?,
     val mileage: Int?,
-    val price: Int?
+    val price: Int?,
+    val tag: String?
 ){
 }

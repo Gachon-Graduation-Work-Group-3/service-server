@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
-    @Query("select new howmuchcar.domain.query.car.SearchCarsQuery(lk.car.carId, lk.car.name, lk.car.age, lk.car.image, lk.car.mileage, lk.car.price) " +
+    @Query("select new howmuchcar.domain.query.car.SearchCarsQuery(lk.car.carId, lk.car.name, lk.car.age, lk.car.image, lk.car.mileage, lk.car.price, lk.car.tags) " +
             "from UserLike lk " +
             "where lk.user.id = :userId")
     Page<SearchCarsQuery> findUserLikesByUser(Pageable pageable, @Param("userId") Long userId);

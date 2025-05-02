@@ -22,7 +22,8 @@ class CarCommonConverter {
                     name = car.name,
                     image = car.image,
                     mileage = car.mileage,
-                    price = car.price
+                    price = car.price,
+                    tag = car.tags
                 )
             }
         return PageImpl(searchResponses, searchCarsQueries.pageable, searchCarsQueries.totalElements)
@@ -42,7 +43,8 @@ class CarCommonConverter {
                         name = car.name,
                         image = car.image,
                         mileage = car.mileage,
-                        price = car.price
+                        price = car.price,
+                        tag = car.tags
                     )
                 }
         return PageImpl(

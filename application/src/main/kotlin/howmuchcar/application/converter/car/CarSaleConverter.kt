@@ -16,7 +16,7 @@ import java.util.stream.Collectors
 @Component
 @RequiredArgsConstructor
 class CarSaleConverter {
-    fun toSaleCar(request: CarSaleRequest, user: User, imageURLs: List<String>) : CarSale {
+    fun toSaleCar(request: CarSaleRequest, user: User, imageURLs: List<String>,tags: String) : CarSale {
         val image = imageURLs.joinToString(",")
         return CarSale.builder()
             .saleStatus(false)
@@ -45,6 +45,7 @@ class CarSaleConverter {
             .number(request.number)
             .fuel(request.fuel)
             .user(user)
+            .tags(tags)
             .build()
     }
 
@@ -57,10 +58,26 @@ class CarSaleConverter {
                     name = car.name,
                     image = car.image,
                     mileage = car.mileage,
-                    price = car.price
+                    price = car.price,
+                    tag = car.tags
                 )
             }
         return PageImpl(searchResponses, searchCarsQueries.pageable, searchCarsQueries.totalElements)
+    }
+
+    fun toSearchCarsResponse(searchCarsQueries: List<SearchCarsQuery>): List<CarSearchResponse> {
+        return searchCarsQueries
+            .map{ car: SearchCarsQuery ->
+                CarSearchResponse(
+                    carId = car.carId,
+                    age = car.age,
+                    name = car.name,
+                    image = car.image,
+                    mileage = car.mileage,
+                    price = car.price,
+                    tag = car.tags
+                )
+            }
     }
 
     fun toDescResponse(carSale: CarSale): CarSaleSearchDescResponse {
@@ -78,7 +95,8 @@ class CarSaleConverter {
                         name = car.name,
                         image = car.image,
                         mileage = car.mileage,
-                        price = car.price
+                        price = car.price,
+                        tag = car.tags
                     )
                 }
         return PageImpl(

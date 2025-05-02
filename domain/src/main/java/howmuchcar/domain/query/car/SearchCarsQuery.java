@@ -15,6 +15,7 @@ public class SearchCarsQuery {
     private String image;
     private Integer mileage;
     private Integer price;
+    private String tags;
 }
 
 

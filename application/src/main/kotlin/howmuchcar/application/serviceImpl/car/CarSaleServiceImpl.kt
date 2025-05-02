@@ -27,9 +27,10 @@ class CarSaleServiceImpl(
 ): CarSaleService {
 
     @Transactional
-    override fun postSaleCar(carSaleRequest: CarSaleRequest, user: User, imageURL: List<String>) {
-        val ent = carSaleConverter.toSaleCar(carSaleRequest, user, imageURL)
-        carSaleRepository.save(ent)
+    override fun postSaleCar(carSaleRequest: CarSaleRequest, user: User, imageURL: List<String>, tags: String
+    ): CarSale {
+        val ent = carSaleConverter.toSaleCar(carSaleRequest, user, imageURL, tags)
+        return carSaleRepository.save(ent)
     }
 
     override fun patchCarToSaleCompleted(carId: Long, user: User) {
@@ -78,6 +79,10 @@ class CarSaleServiceImpl(
     override fun findCarSaleById(carId: Long): CarSale {
         return carSaleRepository.findById(carId)
             .orElseThrow{RestApiException(CarErrorStatus.NOT_EXIST_CAR)}
+    }
+
+    override fun findCarSaleByTags(idList: List<Long>): List<CarSearchResponse> {
+        return carSaleConverter.toSearchCarsResponse(carSaleRepository.findByTagIds(idList))
     }
 
 }

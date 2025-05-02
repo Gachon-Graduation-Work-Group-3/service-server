@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 
 
 @Component
-@ConfigurationProperties(prefix = "spring.oci.object-storage")
+@ConfigurationProperties(prefix = "spring.object-storage")
 data class ObjectStorageProperties(
     var region: String? = null,
     var namespace: String? = null,

@@ -5,9 +5,11 @@ import howmuchcar.application.converter.car.CarSearchDetailResponse
 import howmuchcar.application.converter.car.CarSearchResponse
 import howmuchcar.application.dto.car.CarSaleRequest
 import howmuchcar.application.facade.car.CarSaleFacade
+import howmuchcar.application.service.ai.AiService
 import howmuchcar.common.apiPayload.ApiResponse
 import howmuchcar.common.auth.CurrentUser
 import howmuchcar.domain.entity.User
+import howmuchcar.domain.query.car.SearchCarsQuery
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import lombok.RequiredArgsConstructor
@@ -22,7 +24,8 @@ import java.time.LocalDate
 @RequiredArgsConstructor
 @RequestMapping("/api/car/sale")
 class CarSaleController (
-    private val carSaleFacade: CarSaleFacade
+    private val carSaleFacade: CarSaleFacade,
+    private val aiService: AiService
 ) {
     @PostMapping(
         value = ["/article"],
@@ -91,6 +94,21 @@ class CarSaleController (
             carSaleFacade.searchDetailCars(
                 PageRequest.of(page, size),
                 manu, model, submodel, grade
+            )
+        )
+    }
+
+    @GetMapping("/search/filters/tags")
+    fun searchTagsCars(
+        @RequestParam page: Int,
+        @RequestParam size: Int,
+        @RequestParam tag: String,
+    ): ApiResponse<List<CarSearchResponse>> {
+        return ApiResponse.onSuccess(
+            carSaleFacade.searchTagsCars(
+                page,
+                size,
+                tag
             )
         )
     }

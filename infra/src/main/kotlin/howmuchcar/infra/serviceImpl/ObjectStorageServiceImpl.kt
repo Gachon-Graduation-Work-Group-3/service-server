@@ -12,6 +12,7 @@ import howmuchcar.infra.properties.ObjectStorageProperties
 import howmuchcar.infra.service.ObjectStorageService
 import lombok.AllArgsConstructor
 import lombok.RequiredArgsConstructor
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayInputStream
@@ -25,7 +26,9 @@ import java.util.*
 class ObjectStorageServiceImpl(
     private val properties: ObjectStorageProperties
 ):ObjectStorageService {
-    private val projectConfigPath: String = Paths.get(System.getProperty("user.dir"),".oci", "config").toString()
+
+    @Value("\${spring.oci.config.path}")
+    lateinit var projectConfigPath: String
 
     override fun uploadFile(image: MultipartFile):String {
         val client = getObjectStorageClient()

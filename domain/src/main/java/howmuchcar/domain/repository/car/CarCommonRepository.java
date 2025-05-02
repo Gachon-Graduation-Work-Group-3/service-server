@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.Optional;
 
 public interface CarCommonRepository extends JpaRepository<Car, Long> {
-    @Query("SELECT new howmuchcar.domain.query.car.SearchCarsQuery(c.carId, c.name, c.age, c.image, c.mileage, c.price) " +
+    @Query("SELECT new howmuchcar.domain.query.car.SearchCarsQuery(c.carId, c.name, c.age, c.image, c.mileage, c.price, c.tags) " +
             "FROM Car c " +
             "WHERE (:minAge IS NULL OR c.age >= CAST(:minAge AS date)) " +
             "AND (:maxAge IS NULL OR c.age <= CAST(:maxAge AS date)) " +
@@ -34,7 +34,7 @@ public interface CarCommonRepository extends JpaRepository<Car, Long> {
                                           @Param("maxPrice") Integer maxPrice,
                                           @Param("color") String color);
 
-    @Query("select new howmuchcar.domain.query.car.SearchDetailCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price) " +
+    @Query("select new howmuchcar.domain.query.car.SearchDetailCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price, c.tags) " +
             "from Car c " +
             "where ((:manu is null ) or (:manu = c.manufacturer))" +
             "and ((:model is null ) or (:model = c.model))" +

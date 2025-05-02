@@ -1,10 +1,12 @@
 package howmuchcar.application.facade.car
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import howmuchcar.application.converter.car.CarSaleSearchDescResponse
 import howmuchcar.application.converter.car.CarSearchDescResponse
 import howmuchcar.application.converter.car.CarSearchDetailResponse
 import howmuchcar.application.converter.car.CarSearchResponse
 import howmuchcar.application.dto.car.CarSaleRequest
+import howmuchcar.application.service.ai.AiService
 import howmuchcar.application.service.car.CarSaleService
 import howmuchcar.application.service.car.CarSaleViewService
 import howmuchcar.domain.entity.CarSale
@@ -25,7 +27,9 @@ import java.util.*
 class CarSaleFacade (
     private val carSaleService: CarSaleService,
     private val objectStorageService: ObjectStorageService,
-    private val carSaleViewService: CarSaleViewService
+    private val carSaleViewService: CarSaleViewService,
+    private val aiService: AiService,
+    private val objectMapper: ObjectMapper
 ){
     fun postSaleCar(
         carSaleRequest: CarSaleRequest,
@@ -36,7 +40,10 @@ class CarSaleFacade (
         for (image in images) {
             imagesURLs.add(objectStorageService.uploadFile(image))
         }
-        carSaleService.postSaleCar(carSaleRequest, user, imagesURLs)
+        val tags = aiService.generateTags(carSaleRequest.description)
+        val carSale = carSaleService.postSaleCar(carSaleRequest, user, imagesURLs, objectMapper.writeValueAsString(tags))
+
+        aiService.saveEmbedding(aiService.generateEmbedding(tags, carSale.carId))
     }
 
     fun patchCarToSaleCompleted(carId: Long, user: User) {
@@ -83,5 +90,18 @@ class CarSaleFacade (
         grade: String?
     ): Page<CarSearchDetailResponse> {
         return carSaleService.searchCarSaleDetail(pageable, manu, model, submodel, grade)
+    }
+
+    fun searchTagsCars(
+        page:Int,
+        size:Int,
+        tag: String,
+    ): List<CarSearchResponse> {
+        val pineconeClient = aiService.generateEmbedding(listOf(tag), 1)
+        val idList =  aiService.findTagCar(pineconeClient[0].values, page, size)
+        val idOrderMap = idList.withIndex().associate { it.value to it.index }
+
+        val unorderedResults = carSaleService.findCarSaleByTags(idList)
+        return unorderedResults.sortedBy { idOrderMap[it.carId] }
     }
 }

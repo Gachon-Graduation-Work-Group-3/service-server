@@ -48,17 +48,11 @@ class OAuth2SuccessHandler(
         jwtProvider.saveRefreshToken(email, refreshToken)
 
         // 응답 상태 설정 및 리디렉션
-        response!!.status = HttpStatus.FOUND.value()
-        val responseBody = mapOf(
-            "accessToken" to accessToken,
-            "refreshToken" to refreshToken
-        )
+        val redirectUrl = "http://localhost:3000/login-success" +
+                "?accessToken=$accessToken&refreshToken=$refreshToken"
 
-        response.contentType = MediaType.APPLICATION_JSON_VALUE
-        response.characterEncoding = "UTF-8"
-        response.writer.write(
-            ObjectMapper().writeValueAsString(responseBody)
-        )
+        response!!.status = HttpStatus.FOUND.value()
+        response.setHeader("Location", redirectUrl)
         response.flushBuffer()
     }
 

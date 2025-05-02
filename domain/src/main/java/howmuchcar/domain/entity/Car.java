@@ -100,4 +100,6 @@ public class Car {
 
     @Column()
     private String grade;
+
+    private String tags;
 }

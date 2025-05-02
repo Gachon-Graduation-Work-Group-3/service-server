@@ -35,7 +35,7 @@ public class CarSale extends DateBaseEntity {
     @Column(length = 10000)
     private String image;
 
-    @Column(length = 20)
+    @Column(length = 100)
     private String name;
 
     @Column(length = 5)
@@ -68,7 +68,7 @@ public class CarSale extends DateBaseEntity {
     @Column()
     private Integer cc;
 
-    @Column(name = "description", length = 500)
+    @Column(name = "description", columnDefinition = "TEXT")
     private String desc;
 
     @Column(length = 20)
@@ -107,4 +107,6 @@ public class CarSale extends DateBaseEntity {
 
     @Column()
     private boolean saleStatus;
+
+    private String tags;
 }

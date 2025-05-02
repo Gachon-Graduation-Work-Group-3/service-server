@@ -12,6 +12,7 @@ public interface ChatRepository extends JpaRepository<Chat, String> {
     @Query("select new howmuchcar.domain.query.chat.SearchChatsQuery(" +
             "c.id, c.message, c.user.id, c.createdAt)" +
             "from Chat c " +
-            "where c.room.id = :roomId")
+            "where c.room.id = :roomId " +
+            "order by c.createdAt desc")
     Page<SearchChatsQuery> findChatByRoomId(Pageable pageable, @Param("roomId") Long roomId);
 }

@@ -13,9 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 public interface CarSaleRepository extends JpaRepository<CarSale, Long> {
-    @Query("SELECT new howmuchcar.domain.query.car.SearchCarsQuery(c.carId, c.name, c.age, c.image, c.mileage, c.price) " +
+    @Query("SELECT new howmuchcar.domain.query.car.SearchCarsQuery(c.carId, c.name, c.age, c.image, c.mileage, c.price, c.tags) " +
             "FROM CarSale c " +
             "WHERE (:minAge IS NULL OR c.age >= CAST(:minAge AS date)) " +
             "AND (:maxAge IS NULL OR c.age <= CAST(:maxAge AS date)) " +
@@ -34,7 +35,7 @@ public interface CarSaleRepository extends JpaRepository<CarSale, Long> {
                                           @Param("maxPrice") Integer maxPrice,
                                           @Param("color") String color);
 
-    @Query("select new howmuchcar.domain.query.car.SearchDetailCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price) " +
+    @Query("select new howmuchcar.domain.query.car.SearchDetailCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price, c.tags) " +
             "from CarSale c " +
             "where ((:manu is null ) or (:manu = c.manufacturer))" +
             "and ((:model is null ) or (:model = c.model))" +
@@ -61,4 +62,10 @@ public interface CarSaleRepository extends JpaRepository<CarSale, Long> {
             "where c.carId = :carId and c.user.id = :userId ")
     int changeToSaleCompleted(@Param("carId") Long carId,
                               @Param("userId") Long userId);
+
+    @Query("select new howmuchcar.domain.query.car.SearchCarsQuery(c.carId, c.name,c.age, c.image, c.mileage, c.price, c.tags) " +
+            "from CarSale c " +
+            "where c.carId in :idList")
+    List<SearchCarsQuery> findByTagIds(@Param("idList") List<Long> idList);
+
 }

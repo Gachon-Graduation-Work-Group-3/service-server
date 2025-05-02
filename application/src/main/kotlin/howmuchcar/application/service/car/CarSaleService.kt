@@ -16,7 +16,9 @@ import java.util.*
 interface CarSaleService {
     fun postSaleCar(carSaleRequest: CarSaleRequest,
                     user: User,
-                    imageURL: List<String>)
+                    imageURL: List<String>,
+                    tags: String
+    ): CarSale
 
     fun patchCarToSaleCompleted(carId: Long, user: User)
 
@@ -40,5 +42,9 @@ interface CarSaleService {
     fun findCarSaleById(
         carId: Long,
     ): CarSale
+
+    fun findCarSaleByTags(
+        idList: List<Long>
+    ) : List<CarSearchResponse>
 
 }

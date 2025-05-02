@@ -18,6 +18,13 @@ dependencies {
     implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient:3.38.0'
     implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient-choices:3.38.0'
     implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient-jersey3:3.37.0'
+    implementation("com.google.code.gson:gson:2.8.8") // 최신 버전으로 대체할 수 있습니다
+
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1") // 환경변수
 }
 
 tasks.named('test') {
