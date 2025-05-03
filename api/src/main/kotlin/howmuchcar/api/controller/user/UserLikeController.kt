@@ -1,11 +1,10 @@
 package howmuchcar.api.controller.user
 
+import howmuchcar.api.security.annotation.CurrentUser
 import howmuchcar.application.dto.user.UserLikeResponse
 import howmuchcar.application.facade.user.UserLikeFacade
 import howmuchcar.common.apiPayload.ApiResponse
-import howmuchcar.common.auth.CurrentUser
 import howmuchcar.domain.entity.User
-import jakarta.servlet.http.HttpServletRequest
 import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.*

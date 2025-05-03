@@ -1,10 +1,10 @@
 package howmuchcar.api.controller.chat
 
 
+import howmuchcar.api.security.annotation.CurrentUser
 import howmuchcar.application.dto.chat.ChatMessageResponse
 import howmuchcar.application.facade.chat.ChatMessageFacade
 import howmuchcar.common.apiPayload.ApiResponse
-import howmuchcar.common.auth.CurrentUser
 import howmuchcar.domain.entity.User
 import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.PageRequest

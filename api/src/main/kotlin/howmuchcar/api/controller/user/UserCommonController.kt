@@ -1,9 +1,9 @@
 package howmuchcar.api.controller.user
 
+import howmuchcar.api.security.annotation.CurrentUser
 import howmuchcar.application.dto.user.UserProfileResponse
 import howmuchcar.application.facade.user.UserCommonFacade
 import howmuchcar.common.apiPayload.ApiResponse
-import howmuchcar.common.auth.CurrentUser
 import howmuchcar.domain.entity.User
 import lombok.RequiredArgsConstructor
 import org.springframework.web.bind.annotation.GetMapping

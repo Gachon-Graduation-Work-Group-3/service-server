@@ -3,18 +3,17 @@ package howmuchcar.application.facade.car
 import howmuchcar.application.converter.car.CarSearchDescResponse
 import howmuchcar.application.converter.car.CarSearchDetailResponse
 import howmuchcar.application.converter.car.CarSearchResponse
-import howmuchcar.application.service.car.CarCommonService
+import howmuchcar.application.port.`in`.car.CarSearchUseCase
 import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import java.util.*
 
 @Service
 @RequiredArgsConstructor
 class CarCommonFacade (
-    private val carCommonService: CarCommonService
+    private val carSearchUseCase: CarSearchUseCase
 ){
     fun searchCars(
         pageable: Pageable,
@@ -26,7 +25,7 @@ class CarCommonFacade (
         maxPrice: Int?,
         color: String?
     ): Page<CarSearchResponse> {
-        return carCommonService.searchCars(
+        return carSearchUseCase.searchCars(
             pageable,
             minAge,
             maxAge,
@@ -39,7 +38,7 @@ class CarCommonFacade (
     }
 
     fun searchDescription(carId: Long): CarSearchDescResponse {
-        return carCommonService.searchCarDescription(carId)
+        return carSearchUseCase.searchCarDescription(carId)
     }
 
     fun searchDetailCars(
@@ -49,6 +48,6 @@ class CarCommonFacade (
         submodel: String?,
         grade: String?
     ): Page<CarSearchDetailResponse> {
-        return carCommonService.searchCarDetail(pageable, manu, model, submodel, grade)
+        return carSearchUseCase.searchCarDetail(pageable, manu, model, submodel, grade)
     }
 }

@@ -13,8 +13,6 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect' // Kotlin 리플렉션 (Spring에 필요)
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.7.0") // 최신 버전 확인
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -29,6 +27,8 @@ dependencies {
     implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient:3.38.0'
     implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient-choices:3.38.0'
     implementation 'com.oracle.oci.sdk:oci-java-sdk-common-httpclient-jersey3:3.37.0'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     implementation 'mysql:mysql-connector-java:8.0.32'
 

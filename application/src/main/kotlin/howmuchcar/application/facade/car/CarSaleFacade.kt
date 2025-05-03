@@ -2,16 +2,18 @@ package howmuchcar.application.facade.car
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import howmuchcar.application.converter.car.CarSaleSearchDescResponse
-import howmuchcar.application.converter.car.CarSearchDescResponse
 import howmuchcar.application.converter.car.CarSearchDetailResponse
 import howmuchcar.application.converter.car.CarSearchResponse
 import howmuchcar.application.dto.car.CarSaleRequest
-import howmuchcar.application.service.ai.AiService
-import howmuchcar.application.service.car.CarSaleService
-import howmuchcar.application.service.car.CarSaleViewService
+import howmuchcar.application.port.`in`.car.CarSaleCommonUseCase
+import howmuchcar.application.port.`in`.car.CarSaleSearchUseCase
+import howmuchcar.application.port.`in`.car.CarSaleViewUseCase
+import howmuchcar.application.port.out.infra.BucketPort
+import howmuchcar.application.port.out.infra.EmbeddingPort
+import howmuchcar.application.port.out.infra.GenerateTagPort
+import howmuchcar.application.port.out.infra.PineconePort
 import howmuchcar.domain.entity.CarSale
 import howmuchcar.domain.entity.User
-import howmuchcar.infra.service.ObjectStorageService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import lombok.RequiredArgsConstructor
@@ -25,10 +27,13 @@ import java.util.*
 @Service
 @RequiredArgsConstructor
 class CarSaleFacade (
-    private val carSaleService: CarSaleService,
-    private val objectStorageService: ObjectStorageService,
-    private val carSaleViewService: CarSaleViewService,
-    private val aiService: AiService,
+    private val carSaleCommonUseCase: CarSaleCommonUseCase,
+    private val carSaleSearchUseCase: CarSaleSearchUseCase,
+    private val carSaleViewUseCase: CarSaleViewUseCase,
+    private val bucketPort: BucketPort,
+    private val embeddingPort: EmbeddingPort,
+    private val generateTagPort: GenerateTagPort,
+    private val pineconePort: PineconePort,
     private val objectMapper: ObjectMapper
 ){
     fun postSaleCar(
@@ -38,16 +43,16 @@ class CarSaleFacade (
     ) {
         val imagesURLs: MutableList<String> = ArrayList()
         for (image in images) {
-            imagesURLs.add(objectStorageService.uploadFile(image))
+            imagesURLs.add(bucketPort.uploadFile(image))
         }
-        val tags = aiService.generateTags(carSaleRequest.description)
-        val carSale = carSaleService.postSaleCar(carSaleRequest, user, imagesURLs, objectMapper.writeValueAsString(tags))
+        val tags = generateTagPort.generateTags(carSaleRequest.description)
+        val carSale = carSaleCommonUseCase.postSaleCar(carSaleRequest, user, imagesURLs, objectMapper.writeValueAsString(tags))
 
-        aiService.saveEmbedding(aiService.generateEmbedding(tags, carSale.carId))
+        pineconePort.upsertVectors(embeddingPort.generateEmbedding(tags), carSale.carId)
     }
 
     fun patchCarToSaleCompleted(carId: Long, user: User) {
-        carSaleService.patchCarToSaleCompleted(carId, user)
+        carSaleCommonUseCase.patchCarToSaleCompleted(carId, user)
     }
 
     fun searchCars(
@@ -60,7 +65,7 @@ class CarSaleFacade (
         maxPrice: Int?,
         color: String?
     ): Page<CarSearchResponse> {
-        return carSaleService.searchCarSale(
+        return carSaleSearchUseCase.searchCarSale(
             pageable,
             minAge,
             maxAge,
@@ -77,9 +82,9 @@ class CarSaleFacade (
         httpServletRequest: HttpServletRequest,
         httpServletResponse: HttpServletResponse
     ): CarSaleSearchDescResponse {
-        val carSale: CarSale = carSaleService.findCarSaleById(carId)
-        httpServletResponse.addCookie(carSaleViewService.increaseViewCount(carSale.carId, httpServletRequest))
-        return carSaleService.searchCarSaleDescription(carSale)
+        val carSale: CarSale = carSaleSearchUseCase.findCarSaleById(carId)
+        httpServletResponse.addCookie(carSaleViewUseCase.increaseViewCount(carSale.carId, httpServletRequest))
+        return carSaleSearchUseCase.searchCarSaleDescription(carSale)
     }
 
     fun searchDetailCars(
@@ -89,7 +94,7 @@ class CarSaleFacade (
         submodel: String?,
         grade: String?
     ): Page<CarSearchDetailResponse> {
-        return carSaleService.searchCarSaleDetail(pageable, manu, model, submodel, grade)
+        return carSaleSearchUseCase.searchCarSaleDetail(pageable, manu, model, submodel, grade)
     }
 
     fun searchTagsCars(
@@ -97,11 +102,11 @@ class CarSaleFacade (
         size:Int,
         tag: String,
     ): List<CarSearchResponse> {
-        val pineconeClient = aiService.generateEmbedding(listOf(tag), 1)
-        val idList =  aiService.findTagCar(pineconeClient[0].values, page, size)
+        val vector = embeddingPort.generateEmbedding(listOf(tag))
+        val idList =  pineconePort.findTagsId(vector, page, size)
         val idOrderMap = idList.withIndex().associate { it.value to it.index }
 
-        val unorderedResults = carSaleService.findCarSaleByTags(idList)
+        val unorderedResults = carSaleSearchUseCase.findCarSaleByTags(idList)
         return unorderedResults.sortedBy { idOrderMap[it.carId] }
     }
 }
