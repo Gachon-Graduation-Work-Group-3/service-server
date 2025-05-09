@@ -5,6 +5,7 @@ import howmuchcar.domain.entity.Car
 import howmuchcar.domain.entity.User
 import howmuchcar.domain.entity.UserLike
 import howmuchcar.domain.query.car.SearchCarsQuery
+import howmuchcar.domain.query.user.SearchCarLikeQuery
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Component
 
@@ -17,7 +18,7 @@ class UserLikeConverter {
             .build()
     }
 
-    fun toUserLikes(searchCarsQueries: Page<SearchCarsQuery>, userId: Long): UserLikeResponse {
+    fun toUserLikes(searchCarsQueries: Page<SearchCarLikeQuery>, userId: Long): UserLikeResponse {
         return UserLikeResponse(
             userId = userId,
             userLikeCars = searchCarsQueries

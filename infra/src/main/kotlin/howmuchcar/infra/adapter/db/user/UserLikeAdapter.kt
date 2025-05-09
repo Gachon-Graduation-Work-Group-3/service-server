@@ -3,6 +3,7 @@ package howmuchcar.infra.adapter.db.user
 import howmuchcar.application.port.out.db.user.UserLikePort
 import howmuchcar.domain.entity.UserLike
 import howmuchcar.domain.query.car.SearchCarsQuery
+import howmuchcar.domain.query.user.SearchCarLikeQuery
 import howmuchcar.infra.persistence.user.UserLikeJpaRepository
 import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.Page
@@ -21,7 +22,7 @@ class UserLikeAdapter(
         return userLikeJpaRepository.save(ent)
     }
 
-    override fun findUserLikesByUser(pageable: Pageable, userId: Long): Page<SearchCarsQuery> {
+    override fun findUserLikesByUser(pageable: Pageable, userId: Long): Page<SearchCarLikeQuery> {
         return userLikeJpaRepository.findUserLikesByUser(pageable, userId)
     }
 
