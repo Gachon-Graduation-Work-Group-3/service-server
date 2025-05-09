@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 @RequiredArgsConstructor
-class UserCommonServiceImpl(
+class UserCommonService(
     private val userPort: UserPort
 ) : UserCommonUseCase {
 

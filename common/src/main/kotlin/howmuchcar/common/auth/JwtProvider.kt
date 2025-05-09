@@ -82,7 +82,7 @@ class JwtProvider (
             .subject
     }
 
-    fun extractRefreshTokenToUserId(refreshToken: String?): String {
+    fun extractRefreshTokenToUserId(refreshToken: String): String {
         return Jwts.parserBuilder()
             .setSigningKey(JWT_REFRESH_SECRET)
             .build()

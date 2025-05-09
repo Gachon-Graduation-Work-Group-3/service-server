@@ -37,7 +37,7 @@ class CarSaleConverter {
             .mileage(request.mileage)
             .model(request.model)
             .newPrice(request.newPrice)
-            .price(request.newPrice)
+            .price(request.price)
             .torque(request.torque)
             .weight(request.weight)
             .submodel(request.submodel)

@@ -18,6 +18,6 @@ interface UserLikeJpaRepository : JpaRepository<UserLike, Long> {
 
     @Modifying
     @Query("delete from UserLike ul " +
-            "where ul.id = :id and ul.user.id = :userId")
-    fun deleteUserLikeByIdAndUserId(@Param("id") userLikeId: Long, @Param("userId") userId: Long)
+            "where ul.id = :userLikeId and ul.user.id = :userId")
+    fun deleteUserLikeByIdAndUserId(@Param("userLikeId") userLikeId: Long, @Param("userId") userId: Long)
 }

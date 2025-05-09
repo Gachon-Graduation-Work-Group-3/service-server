@@ -2,6 +2,7 @@ package howmuchcar.infra.adapter.db.chat
 
 import howmuchcar.application.port.out.db.chat.ChatRoomPort
 import howmuchcar.common.exception.RestApiException
+import howmuchcar.common.status.UserErrorStatus
 import howmuchcar.domain.entity.Room
 import howmuchcar.domain.query.chat.SearchRoomInfoQuery
 import howmuchcar.domain.query.chat.SearchRoomUsersQuery
@@ -9,17 +10,19 @@ import howmuchcar.domain.query.chat.SearchRoomsQuery
 import howmuchcar.domain.query.user.SearchOtherUserQuery
 import howmuchcar.infra.persistence.chat.ChatRoomJpaRepository
 import howmuchcar.infra.status.ChatErrorStatus
-import howmuchcar.infra.status.UserErrorStatus
 import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @RequiredArgsConstructor
 class ChatRoomAdapter(
     private val chatRoomJpaRepository: ChatRoomJpaRepository,
 ) :ChatRoomPort{
+
+    @Transactional
     override fun save(ent: Room): Room {
         return chatRoomJpaRepository.save(ent)
     }

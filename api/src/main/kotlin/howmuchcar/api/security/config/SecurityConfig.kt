@@ -38,7 +38,7 @@ class SecurityConfig (
                     .requestMatchers("/oauth2/authorization/google").permitAll()
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui/index.html", "/webjars/**").permitAll()
                     .requestMatchers("/api/car/**").permitAll()
-                    .requestMatchers("/ws/chat/**").permitAll()
+                    .requestMatchers("/ws/chat/**", "/api/token/renew").permitAll()
                     .requestMatchers("/api/car/sale/article", "/api/car/sale/completed").authenticated()
                     .anyRequest().authenticated()
             }

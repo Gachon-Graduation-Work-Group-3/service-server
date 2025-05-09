@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Service
@@ -18,6 +19,8 @@ import java.time.LocalDate
 class CarSaleViewAdapter(
     private val carSaleJpaRepository: CarSaleJpaRepository
 ) : CarSalePort {
+
+    @Transactional
     override fun save(ent: CarSale): CarSale {
         return carSaleJpaRepository.save(ent)
     }
@@ -56,6 +59,7 @@ class CarSaleViewAdapter(
         )
     }
 
+    @Transactional
     override fun increaseViewCount(carId: Long) {
         carSaleJpaRepository.increaseViewCount(carId)
     }

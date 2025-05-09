@@ -8,12 +8,15 @@ import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @RequiredArgsConstructor
 class UserLikeAdapter(
     private val userLikeJpaRepository: UserLikeJpaRepository
 ) :UserLikePort{
+
+    @Transactional
     override fun save(ent: UserLike): UserLike {
         return userLikeJpaRepository.save(ent)
     }
@@ -22,6 +25,7 @@ class UserLikeAdapter(
         return userLikeJpaRepository.findUserLikesByUser(pageable, userId)
     }
 
+    @Transactional
     override fun deleteUserLikeByIdAndUserId(userLikeId: Long, userId: Long) {
         return userLikeJpaRepository.deleteUserLikeByIdAndUserId(userLikeId, userId)
     }

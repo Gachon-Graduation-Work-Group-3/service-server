@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 
 @Service
 @RequiredArgsConstructor
-class UserLikeServiceImpl(
+class UserLikeService(
     private val userLikePort: UserLikePort,
     private val userLikeConverter: UserLikeConverter
 ) : UserLikeUseCase {

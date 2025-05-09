@@ -26,14 +26,14 @@ class PineconeAdapter : PineconePort {
 
     // 벡터 업서트
     override fun upsertVectors(vectors: JsonNode, carId: Long) {
-        vectors["data"].mapIndexed { index, data ->
+        val vectorList = vectors["data"].mapIndexed { index, data ->
             val embedding = data["embedding"].map { it.floatValue() }
             EmbeddingUpsertRequest(
-                id = carId.toString(),  // 각 텍스트에 대한 고유 ID
+                id = carId.toString(),
                 values = embedding
             )
         }
-        val body = mapper.writeValueAsString(mapOf("vectors" to vectors))
+        val body = mapper.writeValueAsString(mapOf("vectors" to vectorList))
 
         val request = Request.Builder()
             .url("$indexUrl/vectors/upsert") // 업서트 엔드포인트

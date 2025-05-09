@@ -1,4 +1,4 @@
-package howmuchcar.infra.status
+package howmuchcar.common.status
 
 import howmuchcar.common.code.BaseCodeDto
 import howmuchcar.common.code.BaseCodeInterface
